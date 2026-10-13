@@ -29,17 +29,17 @@ function play(){
   if(paths.length){const lens=paths.map(p=>{let n=1;try{n=Math.max(1,p.getTotalLength())}catch(e){}p.style.strokeDasharray=`${n} ${n}`;p.style.strokeDashoffset=String(n);return n});items.push({type:'paths',paths,lens,steps:paths.length});}
  }
  const total=items.reduce((n,item)=>n+item.steps,0);let start=null;
- if(status)status.textContent='▶ さいせいちゅう';
+ if(status)status.textContent=items.some(x=>x.type==='reveal')?'▶ もじの ひょうじ（かきじゅんではありません）':'▶ せんを さいせい（かきじゅん みかくにん）';
  function tick(now){if(run!==token)return;if(start===null)start=now;const elapsed=now-start;let offset=0;
   for(const item of items){if(item.type==='paths')item.paths.forEach((p,i)=>{const progress=Math.max(0,Math.min(1,(elapsed-(offset+i)*speed)/speed));p.style.strokeDashoffset=String(item.lens[i]*(1-progress))});else item.rect.setAttribute('width',String(130*Math.max(0,Math.min(1,(elapsed-offset*speed)/speed))));offset+=item.steps;}
-  if(elapsed<total*speed){frameId=requestAnimationFrame(tick)}else if(status)status.textContent='できた！ もういちど みられるよ';
+  if(elapsed<total*speed){frameId=requestAnimationFrame(tick)}else if(status)status.textContent='さいせい おわり（かきじゅんは みかくにん）';
  }
  frameId=requestAnimationFrame(tick);
 }
 function setup(){const playButton=document.getElementById('playStrokes');const stopButton=document.getElementById('stopStrokes');if(!playButton)return;
  playButton.onclick=play;playButton.disabled=false;
  if(stopButton){stopButton.onclick=()=>{stop();const s=document.getElementById('strokeCount');if(s)s.textContent='とめました';};stopButton.disabled=false;}
- const label=document.getElementById('strokeStatus');if(label)label.textContent='v22 再生機能（筆順未検証の文字は表示アニメーション）';
+ const label=document.getElementById('strokeStatus');if(label)label.textContent='v23 再生（正しい筆順の検証は未完了）';
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
 })();
