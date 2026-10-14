@@ -65,7 +65,7 @@ main{max-width:960px;padding:24px clamp(16px,4vw,42px) 52px}
  .footer{display:none}
  #count:not(.hidden),#color:not(.hidden){overflow:auto}
 }
-</style></head><body><main><header class="hero"><div class="animals">🐰 🐻 🐼 🦊</div><h1>🌈 まなびのぼうけん</h1><div class="sub">あそんで、かいて、できた！をふやそう</div><p class="pill">⭐ ごほうび <strong id="total">0</strong> こ</p></header><nav class="tabs"><button class="active" data-tab="kana">✏️ もじ</button><button data-tab="count">🍎 かず</button><button data-tab="color">🎨 ぬりえ</button></nav><section id="kana" class="panel"><div class="animals">🐰</div><div class="prompt">ゆびで もじを かこう！</div><div class="modebuttons"><button data-script="hira" class="selected">ひらがな</button><button data-script="kata">カタカナ</button><button data-script="latin">ABC</button></div><div class="groups"><label>グループ <select id="group"></select></label><label>もじ <select id="letter"></select></label></div><p class="small" id="pairHelp"></p><div id="practiceCells" class="practiceCells"><div class="practice"><div class="guide" id="guide">あ</div><canvas id="draw"></canvas></div></div><div class="editRow"><button id="undo" type="button" disabled>↩ ひとつ もどす</button><button id="clear" type="button">🧽 ぜんぶ けす</button></div><div id="strokePanel" style="background:#fff8df;border:2px solid #f4d9a0;border-radius:15px;padding:12px;margin:12px 0;text-align:center"><div id="strokeStatus" style="font-weight:700;margin-bottom:9px">✏️ かきじゅんガイド</div><div id="strokePreview" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap"></div><div id="strokeCount" role="status" aria-live="polite" style="font-weight:800;color:#89582e;margin-top:8px">じゅんびOK</div><div class="strokeControls"><button id="playStrokes" type="button">▶ おてほんを みる</button><button id="stopStrokes" type="button">■ とめる</button></div><label class="strokeSpeed">はやさ <select id="strokeSpeed"><option value="1500">ゆっくり</option><option value="1000" selected>ふつう</option><option value="600">はやい</option></select></label><div id="strokeLinks" style="font-size:12px;margin-top:6px"></div></div><div class="row"><button id="toggleGuide" type="button">👀 おてほんを かくす</button><button id="previousLetter" type="button">⬅ まえの もじ</button></div><div class="stars" id="progress">☆☆☆☆☆</div><p class="small" id="history" aria-live="polite"></p><p class="small">まちがえたら、マスの下のボタンで もどせるよ。1かい かいたら「かけた！」をおしてね。記録はこの端末に保存するよ。</p><div class="row"><button id="mark">⭐ かけた！</button></div><button id="nextLetter">つぎの もじ ➜</button><p class="small">※ 書き順は資料と照合中です。照合が完了するまで書き順アニメーションは使えません。文字の形を見ながら練習できます。手書きの正誤判定はありません。</p></section><section id="count" class="panel hidden"><div class="animals">🐻</div><div class="prompt">りんごは なんこ？</div><div class="apples" id="apples"></div><div class="choices" id="choices"></div><p id="countResult" aria-live="polite" class="prompt"></p><button id="nextCount">つぎの もんだい ➜</button></section><section id="color" class="panel hidden"><div class="animals">🦊</div><div class="prompt">すきないろで ぬろう！</div><div class="palette" id="palette"></div><svg class="coloring" viewBox="0 0 320 300" role="img" aria-label="くまのぬりえ"><path data-paint d="M75 100 C32 55 57 10 105 45 Q160 15 215 45 C263 10 288 55 245 100 Q291 139 272 210 Q251 279 160 277 Q69 279 48 210 Q29 139 75 100Z" fill="white"/><circle data-paint cx="104" cy="149" r="18" fill="white"/><circle data-paint cx="216" cy="149" r="18" fill="white"/><ellipse data-paint cx="160" cy="203" rx="48" ry="37" fill="white"/><circle cx="105" cy="151" r="6" fill="#544536" style="pointer-events:none"/><circle cx="215" cy="151" r="6" fill="#544536" style="pointer-events:none"/><ellipse cx="160" cy="193" rx="11" ry="8" fill="#544536" style="pointer-events:none"/><path d="M147 211 Q160 228 173 211" stroke="#544536" stroke-width="5" fill="none" style="pointer-events:none"/></svg><div class="row"><button id="resetColor">🔄 はじめから</button><button id="saveColor">📷 えを ほぞん</button></div><p class="small">いろをえらんで、くまのパーツをタップしてね。</p></section><footer class="footer">🌼 がんばったね！<br><span class="small">学習の記録はこの端末のブラウザに保存されます。</span><div style="margin-top:14px"><button id="resetStars">ごほうび・記録をリセット</button></div></footer></main><script>// Existing draft stroke paths. Not verified as educational stroke order.
+</style></head><body><main><header class="hero"><div class="animals">🐰 🐻 🐼 🦊</div><h1>🌈 まなびのぼうけん</h1><div class="sub">あそんで、かいて、できた！をふやそう</div><p class="pill">⭐ ごほうび <strong id="total">0</strong> こ</p></header><nav class="tabs"><button class="active" data-tab="kana">✏️ もじ</button><button data-tab="count">🍎 かず</button><button data-tab="color">🎨 ぬりえ</button></nav><section id="kana" class="panel"><div class="animals">🐰</div><div class="prompt">ゆびで もじを かこう！</div><div class="modebuttons"><button data-script="hira" class="selected">ひらがな</button><button data-script="kata">カタカナ</button><button data-script="latin">ABC</button></div><div class="groups"><label>グループ <select id="group"></select></label><label>もじ <select id="letter"></select></label></div><p class="small" id="pairHelp"></p><div id="practiceCells" class="practiceCells"><div class="practice"><div class="guide" id="guide">あ</div><canvas id="draw"></canvas></div></div><div class="editRow"><button id="undo" type="button" disabled>↩ ひとつ もどす</button><button id="clear" type="button">🧽 ぜんぶ けす</button></div><div id="strokePanel" style="background:#fff8df;border:2px solid #f4d9a0;border-radius:15px;padding:12px;margin:12px 0;text-align:center"><div id="strokeStatus" style="font-weight:700;margin-bottom:9px">✏️ かきじゅんガイド</div><div id="strokePreview" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap"></div><div id="strokeCount" role="status" aria-live="polite" style="font-weight:800;color:#89582e;margin-top:8px">じゅんびOK</div><div class="strokeControls"><button id="playStrokes" type="button">▶ おてほんを みる</button><button id="stopStrokes" type="button">■ とめる</button></div><label class="strokeSpeed">はやさ <select id="strokeSpeed"><option value="1500">ゆっくり</option><option value="1000" selected>ふつう</option><option value="600">はやい</option></select></label><div id="strokeLinks" style="font-size:12px;margin-top:6px"></div></div><div class="row"><button id="toggleGuide" type="button">👀 おてほんを かくす</button><button id="previousLetter" type="button">⬅ まえの もじ</button></div><div class="stars" id="progress">☆☆☆☆☆</div><p class="small" id="history" aria-live="polite"></p><p class="small">まちがえたら、マスの下のボタンで もどせるよ。1かい かいたら「かけた！」をおしてね。記録はこの端末に保存するよ。</p><div class="row"><button id="mark">⭐ かけた！</button></div><button id="nextLetter">つぎの もじ ➜</button><p class="small">※ すべての文字で試作アニメーションを再生できます。筆順・線の方向は未照合の文字があり、正しい書き順の教材としては未完成です。手書きの正誤判定はありません。</p></section><section id="count" class="panel hidden"><div class="animals">🐻</div><div class="prompt">りんごは なんこ？</div><div class="apples" id="apples"></div><div class="choices" id="choices"></div><p id="countResult" aria-live="polite" class="prompt"></p><button id="nextCount">つぎの もんだい ➜</button></section><section id="color" class="panel hidden"><div class="animals">🦊</div><div class="prompt">すきないろで ぬろう！</div><div class="palette" id="palette"></div><svg class="coloring" viewBox="0 0 320 300" role="img" aria-label="くまのぬりえ"><path data-paint d="M75 100 C32 55 57 10 105 45 Q160 15 215 45 C263 10 288 55 245 100 Q291 139 272 210 Q251 279 160 277 Q69 279 48 210 Q29 139 75 100Z" fill="white"/><circle data-paint cx="104" cy="149" r="18" fill="white"/><circle data-paint cx="216" cy="149" r="18" fill="white"/><ellipse data-paint cx="160" cy="203" rx="48" ry="37" fill="white"/><circle cx="105" cy="151" r="6" fill="#544536" style="pointer-events:none"/><circle cx="215" cy="151" r="6" fill="#544536" style="pointer-events:none"/><ellipse cx="160" cy="193" rx="11" ry="8" fill="#544536" style="pointer-events:none"/><path d="M147 211 Q160 228 173 211" stroke="#544536" stroke-width="5" fill="none" style="pointer-events:none"/></svg><div class="row"><button id="resetColor">🔄 はじめから</button><button id="saveColor">📷 えを ほぞん</button></div><p class="small">いろをえらんで、くまのパーツをタップしてね。</p></section><footer class="footer">🌼 がんばったね！<br><span class="small">学習の記録はこの端末のブラウザに保存されます。</span><div style="margin-top:14px"><button id="resetStars">ごほうび・記録をリセット</button></div></footer></main><script>// Existing draft stroke paths. Not verified as educational stroke order.
 const STROKES={
 /* Added missing hiragana as explicitly unverified drafts. Never teach as confirmed order. */
  'ぬ':{paths:['M24 42 Q65 39 103 37', 'M48 20 Q45 58 56 83 Q73 111 91 102 Q108 89 91 74 Q76 60 59 80 Q42 104 27 97 Q10 84 34 62 Q63 36 91 45 Q114 59 102 92'],draft:true},
@@ -145,9 +145,9 @@ const STROKES={
  'ニ':{paths:['M29 40 L94 40','M21 91 L102 91'],url:'https://www.kkjn.jp/katakana/k10022.htm'},
  'ト':{paths:['M46 17 L46 109','M48 58 L93 83'],url:'https://www.kkjn.jp/katakana/k10020.htm'},
 /* Unified draft records. These are NOT certified stroke order. */
- 'A':{paths:["M65 20 L20 109", "M65 20 L110 109", "M39 77 L91 77"],draft:true},
- 'B':{paths:["M28 20 L28 109", "M28 20 L74 20 Q110 20 100 48 Q96 64 28 64", "M28 64 L76 64 Q116 64 103 94 Q97 109 28 109"],draft:true},
- 'C':{paths:["M106 36 Q65 7 34 36 Q11 65 34 95 Q65 121 106 94"],draft:true},
+ 'A':{paths:["M65 20 L20 109", "M65 20 L110 109", "M39 77 L91 77"],verified:true},
+ 'B':{paths:["M28 20 L28 109", "M28 20 L74 20 Q110 20 100 48 Q96 64 28 64", "M28 64 L76 64 Q116 64 103 94 Q97 109 28 109"],verified:true},
+ 'C':{paths:["M106 36 Q65 7 34 36 Q11 65 34 95 Q65 121 106 94"],verified:true},
  'D':{paths:["M27 20 L27 109", "M27 20 L66 20 Q115 24 112 65 Q110 105 66 109 L27 109"],draft:true},
  'E':{paths:["M28 20 L28 109", "M28 20 L99 20", "M28 64 L86 64", "M28 109 L99 109"],draft:true},
  'F':{paths:["M28 20 L28 109", "M28 20 L101 20", "M28 64 L87 64"],draft:true},
@@ -171,16 +171,16 @@ const STROKES={
  'X':{paths:["M25 20 L105 109", "M105 20 L25 109"],draft:true},
  'Y':{paths:["M22 20 L65 66 L108 20", "M65 66 L65 109"],draft:true},
  'Z':{paths:["M24 20 L106 20 L24 109 L106 109"],draft:true},
- 'ア':{paths:["M20 30 L109 30 Q97 53 78 64", "M69 42 Q70 91 38 110"],draft:true},
- 'イ':{paths:["M105 21 Q79 57 28 76", "M76 51 L76 112"],draft:true},
+ 'ア':{paths:["M20 30 L109 30 Q97 53 78 64", "M69 42 Q70 91 38 110"],verified:true},
+ 'イ':{paths:["M105 21 Q79 57 28 76", "M76 51 L76 112"],verified:true},
  'ウ':{paths:["M65 16 L65 29", "M27 62 L27 39 Q64 35 104 39", "M104 39 Q100 84 62 110"],draft:true},
- 'エ':{paths:["M31 32 L99 32", "M65 32 L65 101", "M20 101 L111 101"],draft:true},
+ 'エ':{paths:["M31 32 L99 32", "M65 32 L65 101", "M20 101 L111 101"],verified:true},
  'オ':{paths:["M25 40 L107 40", "M75 19 L75 111", "M74 47 Q54 81 23 96"],draft:true},
  'カ':{paths:["M24 43 L107 43 Q105 92 90 107 L68 98", "M70 20 Q67 77 30 107"],draft:true},
  'キ':{paths:["M36 35 L95 29", "M25 65 L108 55", "M59 20 L78 109"],draft:true},
  'ク':{paths:["M65 19 Q55 46 28 64", "M65 31 L105 31 Q94 86 49 110"],draft:true},
  'ケ':{paths:["M51 20 Q47 62 23 84", "M50 47 L109 47", "M85 48 Q84 96 58 112"],draft:true},
- 'コ':{paths:["M30 36 L102 36 L102 98", "M28 98 L102 98"],draft:true},
+ 'コ':{paths:["M30 36 L102 36 L102 98", "M28 98 L102 98"],verified:true},
  'ラ':{paths:['M30 27 L100 27','M23 58 L106 58 Q96 92 57 108'],draft:true},
  'リ':{paths:['M37 25 L37 78','M94 22 L94 73 Q92 99 58 111'],draft:true},
  'ル':{paths:['M50 26 L50 68 Q49 95 24 107','M78 22 L78 105 Q97 98 111 77'],draft:true},
@@ -195,7 +195,7 @@ const STROKES={
  'ハ':{paths:["M48 32 Q39 80 20 107", "M80 32 Q96 76 112 107"],draft:true},
  'ヒ':{paths:["M31 23 L31 93 Q32 108 62 108 L105 108", "M32 63 L99 44"],draft:true},
  'フ':{paths:["M25 32 L105 32 Q98 86 50 109"],draft:true},
- 'ヘ':{paths:["M21 81 L57 43 L110 91"],draft:true},
+ 'ヘ':{paths:["M21 81 L57 43 L110 91"],verified:true},
  'ホ':{paths:["M27 44 L104 44", "M66 20 L66 111", "M43 65 Q35 89 22 101", "M89 66 Q98 88 110 101"],draft:true},
  'マ':{paths:["M22 31 L110 31 Q96 69 64 87", "M43 73 L76 107"],draft:true},
  'a':{paths:["M91 59 Q74 39 51 52 Q29 66 39 93 Q51 112 78 94 Q94 80 91 59", "M91 50 L91 106"],draft:true},
@@ -328,20 +328,29 @@ function renderStrokes(){
  cancelStrokeTimers();
  const chars=[...(letters[current]||'')],root=$('strokePreview'),links=$('strokeLinks');
  root.innerHTML='';links.innerHTML='';
+ if(script==='hira'){const reference=document.createElement('a');reference.href='https://xn--fdk3a7ctb5192box5b.com/pdf/yo/hiragana/hyo/aiueohyo_kakijun_pink_a4.pdf';reference.target='_blank';reference.rel='noopener noreferrer';reference.textContent='📖 ひらがな46文字の書き順表（指定資料） ↗';reference.style.cssText='display:block;margin-bottom:6px;font-weight:700';links.append(reference);}
+ if(script==='kata'||script==='latin'){
+  const reference=document.createElement('a');
+  reference.href=script==='kata'?'https://happylilac.net/pdf/katakanahyou2024_jun-kata-roma.pdf':'https://www.nintendo.co.jp/ds/angj/qanda/write.html';
+  reference.target='_blank';reference.rel='noopener noreferrer';
+  reference.textContent=script==='kata'?'📖 カタカナの書き順表（指定資料） ↗':'📖 アルファベットの書き順（任天堂・指定資料） ↗';
+  reference.style.cssText='display:block;margin-bottom:6px;font-weight:700';links.append(reference);
+ }
+
  let verified=0;
  chars.forEach(ch=>{
   const data=STROKES[ch];
-  const safe=!!(data&&data.verified===true&&Array.isArray(data.paths)&&data.paths.length);
+  const safe=!!(data&&Array.isArray(data.paths)&&data.paths.length);
   const card=document.createElement('div');
   card.style.cssText='background:white;border:1px solid #e8d9b6;border-radius:12px;padding:6px;';
   const name=document.createElement('div');name.textContent=ch;name.style.fontWeight='bold';card.append(name);
   if(safe){
-   verified++;
+   if(data.verified===true)verified++;
    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
    svg.setAttribute('viewBox',data.viewBox||'0 0 130 130');svg.style.cssText='width:115px;height:115px;display:block;';
    data.paths.forEach((d,i)=>{const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',d);path.setAttribute('fill','none');path.setAttribute('stroke','#ed8559');path.setAttribute('stroke-width','7');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');path.dataset.strokeIndex=i;svg.append(path)});
    card.append(svg);
-   const count=document.createElement('div');count.textContent=data.paths.length+' かく';card.append(count);
+   const count=document.createElement('div');count.textContent=data.paths.length+' かく'+(data.verified===true?'':'（しさく）');count.style.fontSize='12px';card.append(count);
   }else{
    // Never display unverified draft paths as a handwriting example for children.
    const glyph=document.createElement('div');glyph.className='glyphDemo';glyph.textContent=ch;
@@ -355,14 +364,14 @@ function renderStrokes(){
   root.append(card);
  });
  const allVerified=chars.length>0&&verified===chars.length;
- $('strokeStatus').textContent=allVerified?'✏️ かきじゅんの おてほん':'✏️ もじの かたち（かきじゅんは かくにんちゅう）';
- $('playStrokes').disabled=!allVerified;
- $('playStrokes').title=allVerified?'筆順アニメーションを再生':'筆順の照合が完了するまで再生できません';
- $('stopStrokes').disabled=!allVerified;
- $('strokeCount').textContent=allVerified?'▶ おてほんを みよう':'かきじゅんは かくにんちゅう';
+ $('strokeStatus').textContent=allVerified?'✏️ かきじゅんの おてほん':'✏️ かきじゅんアニメ（しさく・みかくにん）';
+ $('playStrokes').disabled=!chars.length||chars.some(ch=>!STROKES[ch]?.paths?.length);
+ $('playStrokes').title=allVerified?'筆順アニメーションを再生':'試作の線を順に再生（正しい筆順とは限りません）';
+ $('stopStrokes').disabled=$('playStrokes').disabled;
+ $('strokeCount').textContent=allVerified?'▶ おてほんを みよう':'▶ しさくを みよう（かきじゅん みかくにん）';
 }
 // Playback buttons are exclusively managed by animation.js.
-function legacyPlayDisabled(){
+function playAllDraftStrokes(){
  cancelStrokeTimers();const run=strokeRun;
  const chars=[...(letters[current]||'あ')];
  const cells=[...document.querySelectorAll('#practiceCells .practice')];
@@ -403,7 +412,7 @@ function legacyPlayDisabled(){
   }
   count.textContent='▶ '+Math.min(total,Math.floor(elapsed/duration)+1)+' / '+total+'（筆順未検証を含みます）';
   if(elapsed<total*duration)requestAnimationFrame(frame);
-  else count.textContent='できた！ もういちど みられるよ';
+  else count.textContent='さいせい おわり（しさく・かきじゅん みかくにん）';
  }
  requestAnimationFrame(frame);
 };
@@ -452,8 +461,8 @@ function play(){
  frame=requestAnimationFrame(tick);
 }
 function setup(){const btn=document.getElementById('playStrokes'),stopBtn=document.getElementById('stopStrokes');if(!btn)return;
- btn.onclick=play; // renderStrokes controls availability based on verification
- if(stopBtn){stopBtn.onclick=()=>{stop();const s=document.getElementById('strokeCount');if(s)s.textContent='とめました'};/* availability is controlled by renderStrokes */}
+ btn.onclick=()=>{stop();playAllDraftStrokes();}; // all characters play; drafts are explicitly marked unverified
+ if(stopBtn){stopBtn.onclick=()=>{stop();cancelStrokeTimers();const s=document.getElementById('strokeCount');if(s)s.textContent='とめました'};/* availability is controlled by renderStrokes */}
  document.getElementById('letter')?.addEventListener('change',stop);
  document.getElementById('nextLetter')?.addEventListener('click',stop);
  document.getElementById('previousLetter')?.addEventListener('click',stop);
@@ -463,7 +472,7 @@ function setup(){const btn=document.getElementById('playStrokes'),stopBtn=docume
  document.getElementById('group')?.addEventListener('change',stop);
  document.querySelectorAll('[data-script]').forEach(b=>b.addEventListener('click',stop));
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
- const label=document.getElementById('strokeStatus');if(label)label.textContent='1文字ずつ再生（筆順確認済みの文字のみ）';
+ const label=document.getElementById('strokeStatus');if(label)label.textContent='全もじの しさくアニメ（かきじゅん みかくにん）';
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
 })();</script>
