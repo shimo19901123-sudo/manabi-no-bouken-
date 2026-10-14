@@ -1,0 +1,492 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffb85c"><title>まなびのぼうけん v21</title><link rel="manifest" href="manifest.webmanifest"><style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,'Hiragino Kaku Gothic ProN',sans-serif;background:linear-gradient(#fff0bd,#f6fcff);color:#53412c;min-height:100dvh}main{max-width:550px;margin:auto;padding:18px 16px 45px}.hero{background:#fff9e9;border:3px solid #ffce7c;border-radius:26px;padding:18px;text-align:center;box-shadow:0 6px #f7dba3}h1{font-size:26px;margin:6px 0}.animals{font-size:39px}.sub{font-size:13px}.tabs,.row{display:flex;gap:9px;margin:16px 0}.tabs button{flex:1;font-size:14px}button{border:0;border-radius:17px;padding:13px 12px;background:#ffd16d;color:#503b25;font-size:16px;font-weight:800;box-shadow:0 4px #dfac50;cursor:pointer;touch-action:manipulation}button:active{transform:translateY(3px);box-shadow:0 1px #dfac50}button.active{background:#ff9b7c;color:white}button:disabled{opacity:.45}.panel{background:#fff;border-radius:25px;padding:18px;margin-top:16px;border:2px solid #f2dcae;text-align:center}.hidden{display:none}.big{font-size:120px;color:#c8c2b5;line-height:1.4}.prompt{font-size:19px;font-weight:800;margin:5px 0 15px}.stars{font-size:24px;letter-spacing:5px;color:#edac25}.practice{position:relative;width:min(100%,330px);aspect-ratio:1;margin:10px auto;background:#fffdf6;border:3px dashed #f3c58c;border-radius:16px;overflow:hidden;touch-action:none}.practice .guide{position:absolute;inset:0;display:grid;place-items:center;font-size:230px;color:#e5e1d8;pointer-events:none}.practice:before{content:'';position:absolute;left:50%;height:100%;border-left:1px dashed #eee;pointer-events:none}.practice:after{content:'';position:absolute;top:50%;width:100%;left:0;border-top:1px dashed #eee;pointer-events:none}canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}.row button{flex:1}.small{font-size:13px;color:#867b6b}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.choices button{font-size:28px}.apples{font-size:42px;line-height:1.6;min-height:90px}.palette{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}.swatch{width:43px;height:43px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #ddd;padding:0}.swatch.selected{outline:3px solid #6a98ef}.coloring{width:100%;max-width:330px;touch-action:manipulation}.coloring path,.coloring circle,.coloring ellipse{stroke:#544536;stroke-width:5;stroke-linejoin:round;cursor:pointer}.footer{text-align:center;margin:20px 0;font-size:13px}.pill{background:#f9e4a3;padding:5px 12px;border-radius:20px;display:inline-block}select{font-size:17px;border-radius:10px;padding:7px;border:2px solid #ffca74;background:white}.modebuttons{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.modebuttons button{padding:12px 4px;font-size:14px;background:#fce6af}.modebuttons button.selected{background:#ff9b7c;color:white}.groups{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:center}.groups label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:bold}.groups select{max-width:180px}.practiceCells{display:flex;justify-content:center;gap:8px;margin:10px auto}.practiceCells .practice{flex:1;min-width:0;max-width:310px;margin:0}.practiceCells.pair .practice{max-width:175px}.practiceCells .guide{font-size:clamp(80px,35vw,215px);line-height:1}.practiceCells.pair .guide{font-size:clamp(65px,21vw,130px)}.practiceCells .practice.smallkana .guide{font-size:clamp(48px,15vw,92px);align-items:end;padding-bottom:10%}.practiceCells .practice:before,.practiceCells .practice:after{z-index:0}.practiceCells .guide{z-index:1}.practiceCells canvas{z-index:2}.practiceCells .guide{font-size:clamp(100px,75vw,290px);font-weight:500;white-space:nowrap;line-height:1;transform:translateY(-1%)}.practiceCells.pair .guide{font-size:clamp(65px,34vw,155px)}.practiceCells .practice.smallkana .guide{font-size:clamp(50px,24vw,110px)}.editRow{display:flex;gap:9px;margin:12px 0}.editRow button{flex:1;min-height:53px}.editRow #undo{background:#cde9ff;box-shadow:0 4px #94bfdc}
+/* v7: iPad-first handwriting layout */
+main{max-width:960px;padding:24px clamp(16px,4vw,42px) 52px}
+.hero{padding:20px}.panel{padding:clamp(16px,3vw,30px)}
+.practiceCells{width:100%;max-width:600px;gap:16px;margin:16px auto 4px}
+.practiceCells .practice{width:100%;max-width:580px;flex:1;min-width:0}
+.practiceCells.pair{max-width:740px}
+.practiceCells.pair .practice{max-width:360px}
+.editRow{max-width:740px;margin:8px auto 18px;gap:14px}
+.editRow button{min-height:68px;font-size:clamp(17px,2.2vw,23px);border-radius:18px}
+.tabs button,.modebuttons button{min-height:55px}
+@media (min-width:700px){
+  .hero h1{font-size:34px}.prompt{font-size:25px}
+  .tabs button{font-size:21px}.modebuttons{max-width:740px;margin:16px auto}
+  .modebuttons button{font-size:19px;min-height:60px}
+  .groups{gap:20px}.groups label{font-size:17px}.groups select{font-size:20px;min-height:48px}
+  .practiceCells .guide{font-size:clamp(200px,38vw,450px)}
+  .practiceCells.pair .guide{font-size:clamp(120px,23vw,290px)}
+  .practiceCells .practice.smallkana .guide{font-size:clamp(90px,18vw,210px)}
+  .row{max-width:740px;margin:16px auto}.row button{min-height:58px;font-size:18px}
+}
+@media (max-width:480px){.editRow{gap:8px}.editRow button{min-height:58px;font-size:15px}}
+ .strokeControls{display:flex;gap:10px;justify-content:center;margin:10px 0}.strokeControls button{flex:1;max-width:240px;min-height:52px}.strokeSpeed{display:flex;justify-content:center;align-items:center;gap:10px;font-weight:700}.strokeSpeed select{font-size:17px;min-height:44px}#strokePreview svg{width:clamp(115px,24vw,190px)!important;height:clamp(115px,24vw,190px)!important}@media(min-width:700px){#strokePanel{padding:20px!important}#strokePreview{gap:18px!important}} 
+/* v13: iPad landscape single-screen learning workspace */
+@media (min-width: 900px) and (orientation: landscape) and (max-height: 1000px) {
+ html,body{height:100%;overflow:hidden}
+ body{min-height:0}
+ main{height:100dvh;max-width:none;padding:8px 18px;display:flex;flex-direction:column;overflow:hidden}
+ .hero{flex:none;display:flex;align-items:center;justify-content:center;gap:14px;padding:4px 12px;border-width:2px;border-radius:14px;box-shadow:none;min-height:43px}
+ .hero .animals{font-size:22px}.hero h1{font-size:20px;margin:0}.hero .sub{display:none}.hero .pill{font-size:12px;margin:0;padding:3px 9px}
+ .tabs{flex:none;margin:7px 0;gap:10px}.tabs button{min-height:39px;padding:6px;font-size:17px;border-radius:12px;box-shadow:0 2px #dfac50}
+ .panel{flex:1;min-height:0;margin:0;padding:10px 14px;border-radius:16px;overflow:hidden}
+ #kana:not(.hidden){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);grid-template-rows:30px 42px 42px minmax(0,1fr) 51px 40px;column-gap:14px;row-gap:5px;align-items:stretch}
+ #kana>.animals{display:none}
+ #kana>.prompt{grid-column:2;grid-row:1;margin:0;font-size:20px;line-height:30px}
+ #kana>.modebuttons{grid-column:2;grid-row:2;margin:0;max-width:none;gap:6px}
+ #kana>.modebuttons button{min-height:0;padding:4px;font-size:16px;border-radius:10px}
+ #kana>.groups{grid-column:2;grid-row:3;gap:12px;justify-content:center;flex-wrap:nowrap}
+ #kana>.groups label{flex-direction:row;align-items:center;font-size:14px;gap:6px}
+ #kana>.groups select{min-height:34px;max-width:160px;font-size:16px;padding:2px 5px}
+ #pairHelp{display:none}
+ #practiceCells{grid-column:2;grid-row:4;width:100%;max-width:none;min-height:0;height:100%;margin:0;align-self:stretch;gap:8px}
+ #practiceCells .practice{height:100%;width:auto;max-width:100%;aspect-ratio:1;flex:0 1 auto;margin:auto}
+ #practiceCells.pair .practice{max-width:48%;height:auto;aspect-ratio:1;align-self:center}
+ #kana>.editRow{grid-column:2;grid-row:5;max-width:none;margin:0;gap:9px}
+ #kana>.editRow button{min-height:0;padding:6px;font-size:17px;border-radius:12px}
+ #strokePanel{grid-column:1;grid-row:1 / 5;margin:0!important;padding:7px!important;min-height:0;overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:space-around}
+ #strokeStatus{font-size:15px;margin-bottom:2px!important}
+ #strokePreview{gap:6px!important;flex-wrap:nowrap!important;max-height:46%;overflow:auto;align-items:center}
+ #strokePreview svg{width:min(19vh,155px)!important;height:min(19vh,155px)!important}
+ #strokePreview>div{padding:3px!important}
+ #strokeCount{font-size:16px;margin-top:2px!important}
+ .strokeControls{width:100%;margin:3px 0;gap:8px}
+ .strokeControls button{min-height:39px;padding:5px;font-size:15px}
+ .strokeSpeed{font-size:14px}.strokeSpeed select{min-height:33px;padding:3px;font-size:15px}
+ #strokeLinks{max-height:30px;overflow:auto}
+ #kana>.row:has(#toggleGuide){grid-column:1;grid-row:5;max-width:none;margin:0;gap:8px}
+ #kana>.row:has(#toggleGuide) button{min-height:0;padding:5px;font-size:15px}
+ #kana>.stars{grid-column:2;grid-row:6;align-self:center;font-size:21px}
+ #kana>#history{grid-column:1;grid-row:6;margin:0;align-self:center;font-size:13px}
+ #kana>.row:has(#mark){grid-column:2;grid-row:6;justify-self:end;margin:0;width:48%;max-width:none;z-index:2}
+ #kana>.row:has(#mark) button{min-height:0;padding:5px;font-size:16px}
+ #kana>#nextLetter{grid-column:1;grid-row:6;justify-self:end;z-index:2;padding:5px 12px;font-size:16px}
+ #kana>p.small:not(#pairHelp):not(#history){display:none}
+ .footer{display:none}
+ #count:not(.hidden),#color:not(.hidden){overflow:auto}
+}
+</style></head><body><main><header class="hero"><div class="animals">🐰 🐻 🐼 🦊</div><h1>🌈 まなびのぼうけん</h1><div class="sub">あそんで、かいて、できた！をふやそう</div><p class="pill">⭐ ごほうび <strong id="total">0</strong> こ</p></header><nav class="tabs"><button class="active" data-tab="kana">✏️ もじ</button><button data-tab="count">🍎 かず</button><button data-tab="color">🎨 ぬりえ</button></nav><section id="kana" class="panel"><div class="animals">🐰</div><div class="prompt">ゆびで もじを かこう！</div><div class="modebuttons"><button data-script="hira" class="selected">ひらがな</button><button data-script="kata">カタカナ</button><button data-script="latin">ABC</button></div><div class="groups"><label>グループ <select id="group"></select></label><label>もじ <select id="letter"></select></label></div><p class="small" id="pairHelp"></p><div id="practiceCells" class="practiceCells"><div class="practice"><div class="guide" id="guide">あ</div><canvas id="draw"></canvas></div></div><div class="editRow"><button id="undo" type="button" disabled>↩ ひとつ もどす</button><button id="clear" type="button">🧽 ぜんぶ けす</button></div><div id="strokePanel" style="background:#fff8df;border:2px solid #f4d9a0;border-radius:15px;padding:12px;margin:12px 0;text-align:center"><div id="strokeStatus" style="font-weight:700;margin-bottom:9px">✏️ かきじゅんガイド</div><div id="strokePreview" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap"></div><div id="strokeCount" role="status" aria-live="polite" style="font-weight:800;color:#89582e;margin-top:8px">じゅんびOK</div><div class="strokeControls"><button id="playStrokes" type="button">▶ みる</button><button id="stopStrokes" type="button">■ とめる</button></div><label class="strokeSpeed">はやさ <select id="strokeSpeed"><option value="1500">ゆっくり</option><option value="1000" selected>ふつう</option><option value="600">はやい</option></select></label><div id="strokeLinks" style="font-size:12px;margin-top:6px"></div></div><div class="row"><button id="toggleGuide" type="button">👀 おてほんを かくす</button><button id="previousLetter" type="button">⬅ まえの もじ</button></div><div class="stars" id="progress">☆☆☆☆☆</div><p class="small" id="history" aria-live="polite"></p><p class="small">まちがえたら、マスの下のボタンで もどせるよ。1かい かいたら「かけた！」をおしてね。記録はこの端末に保存するよ。</p><div class="row"><button id="mark">⭐ かけた！</button></div><button id="nextLetter">つぎの もじ ➜</button><p class="small">※ すべての文字で試作アニメーションを再生できます。筆順・線の方向は未照合の文字があり、正しい書き順の教材としては未完成です。手書きの正誤判定はありません。</p></section><section id="count" class="panel hidden"><div class="animals">🐻</div><div class="prompt">りんごは なんこ？</div><div class="apples" id="apples"></div><div class="choices" id="choices"></div><p id="countResult" aria-live="polite" class="prompt"></p><button id="nextCount">つぎの もんだい ➜</button></section><section id="color" class="panel hidden"><div class="animals">🦊</div><div class="prompt">すきないろで ぬろう！</div><div class="palette" id="palette"></div><svg class="coloring" viewBox="0 0 320 300" role="img" aria-label="くまのぬりえ"><path data-paint d="M75 100 C32 55 57 10 105 45 Q160 15 215 45 C263 10 288 55 245 100 Q291 139 272 210 Q251 279 160 277 Q69 279 48 210 Q29 139 75 100Z" fill="white"/><circle data-paint cx="104" cy="149" r="18" fill="white"/><circle data-paint cx="216" cy="149" r="18" fill="white"/><ellipse data-paint cx="160" cy="203" rx="48" ry="37" fill="white"/><circle cx="105" cy="151" r="6" fill="#544536" style="pointer-events:none"/><circle cx="215" cy="151" r="6" fill="#544536" style="pointer-events:none"/><ellipse cx="160" cy="193" rx="11" ry="8" fill="#544536" style="pointer-events:none"/><path d="M147 211 Q160 228 173 211" stroke="#544536" stroke-width="5" fill="none" style="pointer-events:none"/></svg><div class="row"><button id="resetColor">🔄 はじめから</button><button id="saveColor">📷 えを ほぞん</button></div><p class="small">いろをえらんで、くまのパーツをタップしてね。</p></section><footer class="footer">🌼 がんばったね！<br><span class="small">学習の記録はこの端末のブラウザに保存されます。</span><div style="margin-top:14px"><button id="resetStars">ごほうび・記録をリセット</button></div></footer></main><script>// Existing draft stroke paths. Not verified as educational stroke order.
+const STROKES={
+/* Added missing hiragana as explicitly unverified drafts. Never teach as confirmed order. */
+ 'ぬ':{paths:['M24 42 Q65 39 103 37', 'M48 20 Q45 58 56 83 Q73 111 91 102 Q108 89 91 74 Q76 60 59 80 Q42 104 27 97 Q10 84 34 62 Q63 36 91 45 Q114 59 102 92'],draft:true},
+ 'ね':{paths:['M23 41 L57 38', 'M45 19 Q43 67 43 108', 'M22 78 Q59 40 85 40 Q102 41 101 61 L101 91 Q103 108 85 103 Q68 98 84 87 Q96 82 111 95'],draft:true},
+ 'は':{paths:['M30 22 Q19 65 29 108', 'M61 43 Q83 45 108 40', 'M86 20 L86 94 Q82 109 67 101 Q59 92 73 85 Q87 79 110 98'],draft:true},
+ 'ひ':{paths:['M26 30 Q43 31 56 26 Q38 57 41 83 Q45 107 68 103 Q94 100 90 70 Q86 46 80 29', 'M94 27 Q102 39 108 47'],draft:true},
+ 'ふ':{paths:['M56 22 Q65 31 74 39', 'M42 51 Q62 63 70 80 Q72 91 61 93', 'M29 73 Q26 90 20 97', 'M86 72 Q99 86 106 98'],draft:true},
+ 'ほ':{paths:['M27 22 Q17 67 27 108', 'M55 33 Q81 34 104 29', 'M57 52 Q81 53 106 48', 'M85 18 L85 93 Q82 109 65 102 Q55 94 71 85 Q88 80 109 97'],draft:true},
+ 'ま':{paths:['M23 35 Q60 37 102 30', 'M22 56 Q60 57 104 51', 'M75 18 L75 91 Q73 107 55 103 Q43 96 56 87 Q74 76 107 97'],draft:true},
+ 'み':{paths:['M30 30 L65 28 Q56 56 38 83 Q26 102 41 101 Q60 98 69 70', 'M75 44 Q97 57 107 77', 'M96 37 Q98 77 79 105'],draft:true},
+ 'む':{paths:['M21 45 Q52 44 79 38', 'M57 19 L57 83 Q52 106 35 100 Q20 90 37 75 Q56 62 63 82 Q70 99 92 100 Q109 100 107 88', 'M87 25 Q101 34 107 46'],draft:true},
+ 'も':{paths:['M33 25 L92 25', 'M24 53 L98 53', 'M59 18 Q55 58 53 82 Q52 105 79 104 Q99 104 101 85'],draft:true},
+ 'や':{paths:['M22 57 Q61 38 106 38 Q109 57 82 68', 'M50 21 Q77 62 82 109', 'M88 20 Q100 28 107 36'],draft:true},
+ 'ゆ':{paths:['M27 34 Q21 64 27 92', 'M27 75 Q58 37 83 45 Q111 55 96 79 Q85 94 57 91', 'M75 19 Q80 55 75 85 Q71 103 56 110'],draft:true},
+ 'よ':{paths:['M64 20 L64 90 Q61 108 45 101 Q34 92 49 84 Q66 76 100 95', 'M65 53 Q84 56 104 51'],draft:true},
+ 'ら':{paths:['M52 20 Q72 24 88 33', 'M36 43 Q29 65 29 82 Q60 57 85 69 Q108 82 88 100 Q69 114 46 103'],draft:true},
+ 'る':{paths:['M36 28 Q66 29 95 25 Q76 45 48 69 Q71 53 89 67 Q111 86 92 102 Q79 111 67 104 Q54 96 66 89 Q81 83 91 101'],draft:true},
+ 'れ':{paths:['M22 43 L58 38', 'M45 18 L45 109', 'M22 77 Q56 39 82 37 Q94 38 90 60 L84 90 Q83 105 96 101 L109 94'],draft:true},
+ 'わ':{paths:['M21 43 L58 39', 'M44 18 L44 109', 'M22 76 Q61 37 85 40 Q109 44 102 76 Q96 101 71 104'],draft:true},
+ 'を':{paths:['M24 35 Q65 34 101 28', 'M62 17 Q54 49 36 67 Q62 46 77 61 Q84 75 69 89', 'M104 54 Q73 68 56 84 Q38 105 64 106 L104 102'],draft:true},
+
+
+/* 追加のひらがな試作。正規の筆順資料との照合前のため学習用として未承認。 */
+ 'あ':{paths:['M23 43 Q60 43 103 35','M64 18 C61 42 58 70 58 91 C57 104 63 109 74 106','M44 61 C26 69 23 83 28 94 C34 109 52 98 65 85 C78 72 85 59 86 48 C104 55 112 73 105 91 C99 107 85 112 76 102'],draft:true},
+ 'え':{paths:['M47 21 Q61 18 79 29','M28 48 Q58 44 91 43 Q76 61 58 79 Q72 74 76 87 Q79 105 98 98'],draft:true},
+ 'お':{paths:['M23 43 Q54 41 79 38','M52 20 L52 90 Q52 107 36 99 Q19 89 36 74 Q63 55 87 67 Q110 79 93 102','M92 27 Q103 35 108 45'],draft:true},
+ 'き':{paths:['M25 34 Q58 34 91 28','M20 54 Q60 51 102 47','M53 19 Q61 55 81 75','M43 87 Q35 105 79 103'],draft:true},
+ 'さ':{paths:['M20 43 Q64 42 103 37','M60 19 Q65 55 85 74','M40 87 Q37 107 88 104'],draft:true},
+ 'す':{paths:['M19 41 Q63 41 107 37','M75 17 L75 80 Q73 108 53 99 Q38 91 55 76 Q70 66 78 81 Q88 101 67 110'],draft:true},
+ 'せ':{paths:['M22 48 Q61 44 108 39','M79 18 L79 76','M47 23 L47 88 Q48 103 66 102 L100 99'],draft:true},
+ 'ち':{paths:['M25 39 Q59 38 101 32','M59 18 Q53 53 40 75 Q69 58 89 72 Q112 91 82 107 Q63 115 46 105'],draft:true},
+ 'と':{paths:['M45 23 Q53 51 69 69','M94 42 Q63 63 42 80 Q20 102 58 105 Q80 108 103 99'],draft:true},
+ 'な':{paths:['M19 40 Q51 38 78 33','M53 19 Q49 59 31 88','M81 50 Q99 56 109 67','M81 72 L81 100 Q73 113 54 103 Q44 96 58 88 Q72 82 98 96'],draft:true},
+/* New katakana geometry drafts; stroke order must be checked against a teaching reference. */
+ 'ミ':{paths:['M27 29 L96 35','M33 62 L94 67','M21 97 L105 105'],draft:true},
+ 'ム':{paths:['M70 23 Q58 65 31 100 Q67 97 102 90','M83 69 Q100 88 109 105'],draft:true},
+ 'メ':{paths:['M93 22 Q75 71 33 108','M28 40 Q60 67 102 99'],draft:true},
+ 'モ':{paths:['M33 28 L98 28','M20 59 L108 59','M67 28 L67 91 Q67 106 85 106 L106 105'],draft:true},
+ 'ヤ':{paths:['M19 55 L107 38 Q97 61 80 72','M51 20 L74 109'],draft:true},
+ 'ユ':{paths:['M34 39 L95 39 L95 92','M22 93 L108 93'],draft:true},
+ 'ヨ':{paths:['M28 30 L99 30 L99 104','M36 65 L99 65','M26 104 L99 104'],draft:true},
+ 'ロ':{paths:['M28 28 L28 105','M28 28 L101 28 L101 105','M28 105 L101 105'],draft:true},
+/* Katakana draft paths: not verified against an educational stroke-order source. */
+ 'サ':{paths:['M24 48 L109 44', 'M46 22 L46 69', 'M79 22 L79 70 Q77 94 55 110'],draft:true},
+ 'シ':{paths:['M25 31 L47 43', 'M20 62 L44 74', 'M41 105 Q91 87 104 39'],draft:true},
+ 'ス':{paths:['M30 29 L101 28 Q90 74 34 105', 'M71 72 L109 108'],draft:true},
+ 'セ':{paths:['M18 57 L109 40 Q96 65 78 76', 'M46 19 L46 89 Q45 104 64 104 L100 104'],draft:true},
+ 'ソ':{paths:['M32 26 L51 58', 'M104 21 Q89 82 50 108'],draft:true},
+ 'タ':{paths:['M58 18 Q43 55 22 70', 'M51 37 L102 35 Q92 88 49 111', 'M48 62 L77 79'],draft:true},
+ 'チ':{paths:['M33 36 Q65 34 90 22', 'M21 66 L110 63', 'M68 30 L68 79 Q67 101 48 110'],draft:true},
+ 'ツ':{paths:['M23 34 L32 56', 'M52 26 L61 49', 'M109 25 Q102 85 50 107'],draft:true},
+ 'テ':{paths:['M29 27 L100 27', 'M20 58 L109 58', 'M69 58 Q72 93 50 109'],draft:true},
+ 'ナ':{paths:['M20 57 L109 57', 'M76 20 Q80 80 42 109'],draft:true},
+
+ 'け':{paths:['M34 24 Q29 56 34 101','M56 45 Q82 42 108 40','M87 20 Q91 58 85 83 Q79 101 65 110'],draft:true},
+ 'か':{paths:['M22 52 Q58 44 77 52 Q87 65 75 88 Q66 104 54 91','M59 23 Q51 61 30 103','M92 39 Q108 56 109 73'],draft:true},
+ 'た':{paths:['M25 43 Q52 43 80 37','M57 19 Q52 66 33 107','M76 68 Q91 64 106 67','M77 96 Q87 104 106 100'],draft:true},
+ 'に':{paths:['M35 25 Q27 65 35 107','M65 47 Q84 43 104 46','M69 85 Q80 98 107 91'],draft:true},
+
+ 'の':{paths:['M78 30 Q50 22 32 49 Q15 78 36 91 Q49 99 62 77 Q73 58 70 36 Q91 39 99 57 Q111 88 84 102'],draft:true},
+ 'め':{paths:['M30 38 Q36 70 60 94 Q73 106 84 100','M91 22 Q79 56 57 83 Q35 111 24 91 Q14 71 34 53 Q59 35 87 46 Q107 55 103 83'],draft:true},
+ 'ろ':{paths:['M42 29 Q67 30 88 24 Q75 43 56 61 Q82 52 98 70 Q112 91 90 105 Q73 116 53 103'],draft:true},
+ 'そ':{paths:['M37 28 Q65 30 89 24 Q71 43 40 57 Q66 55 103 49 Q78 62 73 76 Q69 94 94 104'],draft:true},
+
+ 'い':{paths:['M42 30 Q35 75 56 90 Q62 94 71 79','M89 39 Q104 56 104 82'],draft:true},
+ 'う':{paths:['M52 23 Q71 20 84 27','M30 55 Q60 43 93 53 Q104 66 85 90 Q73 105 50 110'],draft:true},
+ 'こ':{paths:['M35 42 Q67 36 94 42','M38 79 Q31 99 59 101 Q81 105 99 97'],draft:true},
+ 'つ':{paths:['M23 61 Q55 43 87 49 Q113 54 100 79 Q88 100 61 104'],draft:true},
+ 'て':{paths:['M25 38 Q65 40 103 33 Q73 55 66 72 Q60 97 93 104'],draft:true},
+ 'へ':{paths:['M22 78 Q39 61 51 47 Q58 41 64 51 Q84 75 108 86'],draft:true},
+ 'り':{paths:['M40 26 Q34 48 43 73','M86 24 Q91 65 74 88 Q64 101 48 109'],draft:true},
+ 'ん':{paths:['M79 20 Q63 42 49 67 Q39 88 38 99 Q40 104 47 93 Q60 69 72 75 Q79 77 78 91 Q82 111 107 89'],draft:true},
+
+ 'く':{paths:['M75 20 L30 65 L75 110'],url:'https://www.kkjn.jp/hiragana/h10008.htm'},
+ 'し':{paths:['M43 20 L43 87 Q44 114 81 98'],url:'https://studia-app.net/shogaku/kokugo-shogaku-grade-1/kyouzai/hiragana'},
+ 'ノ':{paths:['M91 22 Q70 78 33 109'],url:'https://www.kkjn.jp/katakana/k10025.htm'},
+ 'ニ':{paths:['M29 40 L94 40','M21 91 L102 91'],url:'https://www.kkjn.jp/katakana/k10022.htm'},
+ 'ト':{paths:['M46 17 L46 109','M48 58 L93 83'],url:'https://www.kkjn.jp/katakana/k10020.htm'},
+/* Unified draft records. These are NOT certified stroke order. */
+ 'A':{paths:["M65 20 L20 109", "M65 20 L110 109", "M39 77 L91 77"],verified:true},
+ 'B':{paths:["M28 20 L28 109", "M28 20 L74 20 Q110 20 100 48 Q96 64 28 64", "M28 64 L76 64 Q116 64 103 94 Q97 109 28 109"],verified:true},
+ 'C':{paths:["M106 36 Q65 7 34 36 Q11 65 34 95 Q65 121 106 94"],verified:true},
+ 'D':{paths:["M27 20 L27 109", "M27 20 L66 20 Q115 24 112 65 Q110 105 66 109 L27 109"],draft:true},
+ 'E':{paths:["M28 20 L28 109", "M28 20 L99 20", "M28 64 L86 64", "M28 109 L99 109"],draft:true},
+ 'F':{paths:["M28 20 L28 109", "M28 20 L101 20", "M28 64 L87 64"],draft:true},
+ 'G':{paths:["M106 37 Q70 9 37 36 Q12 64 37 95 Q70 120 106 92 L106 69 L75 69"],draft:true},
+ 'H':{paths:["M27 20 L27 109", "M103 20 L103 109", "M27 65 L103 65"],draft:true},
+ 'I':{paths:["M35 20 L95 20", "M65 20 L65 109", "M35 109 L95 109"],draft:true},
+ 'J':{paths:["M38 20 L107 20", "M87 20 L87 83 Q85 115 55 109 Q39 105 32 90"],draft:true},
+ 'K':{paths:["M28 20 L28 109", "M105 20 L28 72", "M63 58 L108 109"],draft:true},
+ 'L':{paths:["M28 20 L28 109 L103 109"],draft:true},
+ 'M':{paths:["M20 109 L20 20 L65 75 L110 20 L110 109"],draft:true},
+ 'N':{paths:["M25 109 L25 20", "M25 20 L105 109", "M105 109 L105 20"],draft:true},
+ 'O':{paths:["M65 20 C8 20 8 109 65 109 C122 109 122 20 65 20"],draft:true},
+ 'P':{paths:["M28 109 L28 20", "M28 20 L75 20 Q116 20 105 55 Q100 72 28 72"],draft:true},
+ 'Q':{paths:["M65 20 C8 20 8 109 65 109 C122 109 122 20 65 20", "M79 88 L111 118"],draft:true},
+ 'R':{paths:["M28 109 L28 20", "M28 20 L75 20 Q116 20 105 55 Q100 72 28 72", "M65 72 L109 109"],draft:true},
+ 'S':{paths:["M104 34 Q68 8 38 30 Q10 54 65 65 Q120 78 93 102 Q62 123 25 96"],draft:true},
+ 'T':{paths:["M18 20 L112 20", "M65 20 L65 109"],draft:true},
+ 'U':{paths:["M26 20 L26 78 Q26 111 65 111 Q104 111 104 78 L104 20"],draft:true},
+ 'V':{paths:["M20 20 L65 109 L110 20"],draft:true},
+ 'W':{paths:["M15 20 L38 109 L65 51 L92 109 L115 20"],draft:true},
+ 'X':{paths:["M25 20 L105 109", "M105 20 L25 109"],draft:true},
+ 'Y':{paths:["M22 20 L65 66 L108 20", "M65 66 L65 109"],draft:true},
+ 'Z':{paths:["M24 20 L106 20 L24 109 L106 109"],draft:true},
+ 'ア':{paths:["M20 30 L109 30 Q97 53 78 64", "M69 42 Q70 91 38 110"],verified:true},
+ 'イ':{paths:["M105 21 Q79 57 28 76", "M76 51 L76 112"],verified:true},
+ 'ウ':{paths:["M65 16 L65 29", "M27 62 L27 39 Q64 35 104 39", "M104 39 Q100 84 62 110"],draft:true},
+ 'エ':{paths:["M31 32 L99 32", "M65 32 L65 101", "M20 101 L111 101"],verified:true},
+ 'オ':{paths:["M25 40 L107 40", "M75 19 L75 111", "M74 47 Q54 81 23 96"],draft:true},
+ 'カ':{paths:["M24 43 L107 43 Q105 92 90 107 L68 98", "M70 20 Q67 77 30 107"],draft:true},
+ 'キ':{paths:["M36 35 L95 29", "M25 65 L108 55", "M59 20 L78 109"],draft:true},
+ 'ク':{paths:["M65 19 Q55 46 28 64", "M65 31 L105 31 Q94 86 49 110"],draft:true},
+ 'ケ':{paths:["M51 20 Q47 62 23 84", "M50 47 L109 47", "M85 48 Q84 96 58 112"],draft:true},
+ 'コ':{paths:["M30 36 L102 36 L102 98", "M28 98 L102 98"],verified:true},
+ 'ラ':{paths:['M30 27 L100 27','M23 58 L106 58 Q96 92 57 108'],draft:true},
+ 'リ':{paths:['M37 25 L37 78','M94 22 L94 73 Q92 99 58 111'],draft:true},
+ 'ル':{paths:['M50 26 L50 68 Q49 95 24 107','M78 22 L78 105 Q97 98 111 77'],draft:true},
+ 'レ':{paths:['M42 22 L42 107 Q78 101 108 68'],draft:true},
+ 'ワ':{paths:['M27 29 L27 58','M27 29 L105 29 Q100 82 59 110'],draft:true},
+ 'ヲ':{paths:['M27 29 L105 29','M26 59 L104 59','M91 48 Q78 90 41 109'],draft:true},
+ 'ン':{paths:['M25 33 L51 56','M42 108 Q92 89 107 36'],draft:true},
+ 'ニ':{paths:["M33 42 L99 42", "M22 98 L110 98"],draft:true},
+ 'ヌ':{paths:["M30 31 L102 31 Q93 83 33 106", "M39 54 Q68 82 104 107"],draft:true},
+ 'ネ':{paths:["M65 17 L65 33", "M27 43 L102 43 Q77 78 25 98", "M70 72 L70 113", "M78 79 L107 101"],draft:true},
+ 'ノ':{paths:["M95 20 Q86 84 37 109"],draft:true},
+ 'ハ':{paths:["M48 32 Q39 80 20 107", "M80 32 Q96 76 112 107"],draft:true},
+ 'ヒ':{paths:["M31 23 L31 93 Q32 108 62 108 L105 108", "M32 63 L99 44"],draft:true},
+ 'フ':{paths:["M25 32 L105 32 Q98 86 50 109"],draft:true},
+ 'ヘ':{paths:["M21 81 L57 43 L110 91"],verified:true},
+ 'ホ':{paths:["M27 44 L104 44", "M66 20 L66 111", "M43 65 Q35 89 22 101", "M89 66 Q98 88 110 101"],draft:true},
+ 'マ':{paths:["M22 31 L110 31 Q96 69 64 87", "M43 73 L76 107"],draft:true},
+ 'a':{paths:["M91 59 Q74 39 51 52 Q29 66 39 93 Q51 112 78 94 Q94 80 91 59", "M91 50 L91 106"],draft:true},
+ 'b':{paths:["M39 18 L39 105", "M39 70 Q56 44 78 54 Q104 64 93 91 Q82 113 58 100 Q44 93 39 82"],draft:true},
+ 'c':{paths:["M96 58 Q71 41 49 58 Q27 80 49 100 Q70 114 95 97"],draft:true},
+ 'd':{paths:["M94 18 L94 105", "M94 72 Q81 47 59 53 Q35 58 37 84 Q39 110 66 104 Q87 100 94 82"],draft:true},
+ 'e':{paths:["M39 78 L98 78 Q98 48 69 51 Q39 51 38 80 Q38 109 70 106 Q87 105 98 95"],draft:true},
+ 'f':{paths:["M77 106 L77 39 Q77 18 97 18", "M54 53 L94 53"],draft:true},
+ 'g':{paths:["M96 53 L96 105 Q96 126 66 122 Q51 120 45 113", "M96 74 Q81 48 60 54 Q36 61 39 85 Q42 109 69 103 Q90 98 96 80"],draft:true},
+ 'h':{paths:["M39 18 L39 105", "M39 77 Q48 52 70 53 Q92 54 92 78 L92 105"],draft:true},
+ 'i':{paths:["M64 53 L64 105", "M64 27 L64 29"],draft:true},
+ 'j':{paths:["M82 53 L82 107 Q82 124 57 123", "M82 27 L82 29"],draft:true},
+ 'k':{paths:["M39 18 L39 105", "M95 53 L40 87", "M65 72 L100 105"],draft:true},
+ 'l':{paths:["M65 18 L65 105"],draft:true},
+ 'm':{paths:["M24 53 L24 105", "M24 72 Q31 52 46 53 Q61 53 61 76 L61 105", "M61 72 Q68 52 84 53 Q100 54 100 76 L100 105"],draft:true},
+ 'n':{paths:["M39 53 L39 105", "M39 72 Q50 52 72 53 Q93 54 93 78 L93 105"],draft:true},
+ 'o':{paths:["M66 52 C28 52 28 107 66 107 C104 107 104 52 66 52"],draft:true},
+ 'p':{paths:["M39 53 L39 123", "M39 74 Q50 49 72 53 Q99 57 97 83 Q95 108 69 105 Q47 102 39 85"],draft:true},
+ 'q':{paths:["M95 53 L95 123", "M95 74 Q84 49 62 53 Q35 57 37 83 Q39 108 65 105 Q87 102 95 85"],draft:true},
+ 'r':{paths:["M43 53 L43 105", "M43 77 Q49 52 83 53"],draft:true},
+ 's':{paths:["M93 60 Q68 46 49 56 Q33 69 66 78 Q104 88 87 101 Q67 114 40 98"],draft:true},
+ 't':{paths:["M64 34 L64 91 Q64 105 83 105", "M46 53 L88 53"],draft:true},
+ 'u':{paths:["M39 53 L39 84 Q39 106 63 106 Q86 106 92 83", "M92 53 L92 105"],draft:true},
+ 'v':{paths:["M32 53 L65 106 L99 53"],draft:true},
+ 'w':{paths:["M21 53 L43 106 L65 70 L87 106 L109 53"],draft:true},
+ 'x':{paths:["M37 53 L94 105", "M94 53 L37 105"],draft:true},
+ 'y':{paths:["M31 53 L65 105", "M100 53 L65 105 Q57 125 39 123"],draft:true},
+ 'z':{paths:["M37 53 L95 53 L37 105 L95 105"],draft:true},
+};
+</script>
+<script>const $=id=>document.getElementById(id);const key='manabi-v1';let state;try{state=JSON.parse(localStorage.getItem(key))||{stars:0}}catch{state={stars:0}};function save(){localStorage.setItem(key,JSON.stringify(state));$('total').textContent=state.stars}save();function reward(){state.stars++;save()}document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));['kana','count','color'].forEach(id=>$(id).classList.toggle('hidden',id!==b.dataset.tab))});const HIRA={"せいおん":[..."あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"],"だくおん":[..."がぎぐげござじずぜぞだぢづでどばびぶべぼ"],"はんだくおん":[..."ぱぴぷぺぽ"],"ちいさいもじ":[..."ぁぃぅぇぉっゃゅょゎ"],"きゃ・しゃ・ちゃ":["きゃ","きゅ","きょ","しゃ","しゅ","しょ","ちゃ","ちゅ","ちょ","にゃ","にゅ","にょ","ひゃ","ひゅ","ひょ","みゃ","みゅ","みょ","りゃ","りゅ","りょ"],"てんてんのくみあわせ":["ぎゃ","ぎゅ","ぎょ","じゃ","じゅ","じょ","ぢゃ","ぢゅ","ぢょ","びゃ","びゅ","びょ","ぴゃ","ぴゅ","ぴょ"],"よくつかうことば":["こんにちは","ありがとう","おはよう","おやすみ","がっこう","きょう","ちょっと","いっしょ"]};
+const toKata=t=>t.replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+96));
+const KATA=Object.fromEntries(Object.entries(HIRA).map(([k,v])=>[k,v.map(toKata)]));KATA["ちいさいもじ"].push("ー","ヵ","ヶ");KATA["がいらいご"]=["ファ","フィ","フェ","フォ","ティ","ディ","トゥ","ドゥ","ウィ","ウェ","ウォ","シェ","ジェ","チェ","ツァ","ツィ","ツェ","ツォ","ヴァ","ヴィ","ヴ","ヴェ","ヴォ"];
+const LATIN={"おおもじ":[..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"],"こもじ":[..."abcdefghijklmnopqrstuvwxyz"],"よくつかうことば":["ABC","CAT","DOG","APPLE","HELLO"]};
+let script='hira',letters=[],current=0,completed=0,ink=false,canvases=[];let undoStack=[];function updateUndo(){const b=document.getElementById('undo');if(b)b.disabled=undoStack.length===0}function resetUndo(){undoStack=[];updateUndo()}document.getElementById('undo').onclick=()=>{const last=undoStack.pop();if(!last)return;const target=canvases[last.i];if(target)target.ctx.putImageData(last.image,0,0);ink=undoStack.length>0;updateUndo()};
+const groups=$('group'),selector=$('letter');let guideVisible=true;function updateGuides(){document.querySelectorAll('#practiceCells .guide').forEach(x=>x.style.opacity=guideVisible?'1':'0');$('toggleGuide').textContent=guideVisible?'👀 おてほんを かくす':'👀 おてほんを みる'}$('toggleGuide').onclick=()=>{guideVisible=!guideVisible;updateGuides()};
+function buildGroups(){let dict=script==='hira'?HIRA:script==='kata'?KATA:LATIN;groups.innerHTML='';Object.keys(dict).forEach((k,i)=>{let o=document.createElement('option');o.value=k;o.textContent=k;groups.append(o)});buildLetters()}
+function buildLetters(){let dict=script==='hira'?HIRA:script==='kata'?KATA:LATIN;letters=dict[groups.value]||[];selector.innerHTML='';letters.forEach((c,i)=>{let o=document.createElement('option');o.value=i;o.textContent=c;selector.append(o)});setLetter(0)}
+function clear(){canvases.forEach(({canvas,ctx})=>ctx.clearRect(0,0,canvas.width,canvas.height));ink=false;resetUndo()}
+function setupCanvas(canvas){let ctx=canvas.getContext('2d'),r=canvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;canvas.width=Math.round(r.width*ratio);canvas.height=Math.round(r.height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);ctx.lineWidth=Math.max(6,r.width*.042);ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#f38c62';let drawing=false;function pos(e){let b=canvas.getBoundingClientRect();return [e.clientX-b.left,e.clientY-b.top]};canvas.onpointerdown=e=>{undoStack.push({i:[...document.querySelectorAll('#practiceCells canvas')].indexOf(canvas),image:ctx.getImageData(0,0,canvas.width,canvas.height)});updateUndo();drawing=true;canvas.setPointerCapture(e.pointerId);ctx.beginPath();ctx.moveTo(...pos(e));ctx.lineTo(...pos(e));ctx.stroke();ink=true};canvas.onpointermove=e=>{if(drawing){ctx.lineTo(...pos(e));ctx.stroke()}};canvas.onpointerup=()=>drawing=false;canvas.onpointercancel=()=>drawing=false;return {canvas,ctx}}
+// 筆順の公開教材で確認した一部の文字のみ、独自作図した簡易アニメーションを表示。
+// 参照元の画像やフォントは転載しない。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Katakana geometry prototypes (UNVERIFIED; do not present as correct stroke order).
+
+
+
+
+
+
+
+
+
+
+// Additional katakana shape prototypes (draft only; NOT verified educational stroke order).
+
+
+
+
+
+
+
+// Additional katakana SVG path prototypes. These are NOT verified stroke-order lessons.
+
+
+
+
+
+
+
+
+
+
+// Lowercase handwriting guide prototypes: paths are DRAFTS, not verified stroke order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let strokeRun=0;let strokeTimers=[];function cancelStrokeTimers(){document.querySelectorAll('.animatedStrokeOverlay').forEach(x=>x.remove());strokeRun++;strokeTimers.forEach(clearTimeout);strokeTimers=[];document.querySelectorAll('#strokePreview path').forEach(p=>{p.style.transition='none';p.style.strokeDashoffset='0'});document.querySelectorAll('#strokePreview .glyphDemo').forEach(g=>{g.style.transition='none';g.style.opacity='.22';g.style.transform='scale(.88)'});const c=$('strokeCount');if(c)c.textContent='じゅんびOK'}
+function renderStrokes(){
+ cancelStrokeTimers();
+ const chars=[...(letters[current]||'')],root=$('strokePreview'),links=$('strokeLinks');
+ root.innerHTML='';links.innerHTML='';
+ if(script==='hira'){const reference=document.createElement('a');reference.href='https://xn--fdk3a7ctb5192box5b.com/pdf/yo/hiragana/hyo/aiueohyo_kakijun_pink_a4.pdf';reference.target='_blank';reference.rel='noopener noreferrer';reference.textContent='📖 ひらがな46文字の書き順表（指定資料） ↗';reference.style.cssText='display:block;margin-bottom:6px;font-weight:700';links.append(reference);}
+ if(script==='kata'||script==='latin'){
+  const reference=document.createElement('a');
+  reference.href=script==='kata'?'https://happylilac.net/pdf/katakanahyou2024_jun-kata-roma.pdf':'https://www.nintendo.co.jp/ds/angj/qanda/write.html';
+  reference.target='_blank';reference.rel='noopener noreferrer';
+  reference.textContent=script==='kata'?'📖 カタカナの書き順表（指定資料） ↗':'📖 アルファベットの書き順（任天堂・指定資料） ↗';
+  reference.style.cssText='display:block;margin-bottom:6px;font-weight:700';links.append(reference);
+ }
+
+ let verified=0;
+ chars.forEach(ch=>{
+  const data=STROKES[ch];
+  const safe=!!(data&&Array.isArray(data.paths)&&data.paths.length);
+  const card=document.createElement('div');
+  card.style.cssText='background:white;border:1px solid #e8d9b6;border-radius:12px;padding:6px;';
+  const name=document.createElement('div');name.textContent=ch;name.style.fontWeight='bold';card.append(name);
+  if(safe && (data.verified===true || ch==='あ')){
+   if(data.verified===true)verified++;
+   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+   svg.setAttribute('viewBox',data.viewBox||'0 0 130 130');svg.style.cssText='width:115px;height:115px;display:block;';
+   data.paths.forEach((d,i)=>{const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',d);path.setAttribute('fill','none');path.setAttribute('stroke','#ed8559');path.setAttribute('stroke-width','7');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');path.dataset.strokeIndex=i;svg.append(path)});
+   card.append(svg);
+   const count=document.createElement('div');count.textContent=data.paths.length+' かく'+(data.verified===true?'':'（しさく）');count.style.fontSize='12px';card.append(count);
+  }else{
+   // Never display unverified draft paths as a handwriting example for children.
+   const glyph=document.createElement('div');glyph.className='glyphDemo';glyph.textContent=ch;
+   glyph.setAttribute('aria-label',ch+' の文字見本（筆順ではありません）');
+   glyph.style.cssText='width:115px;height:115px;display:grid;place-items:center;font-size:88px;color:#ed8559;';
+   card.append(glyph);
+   const note=document.createElement('div');note.textContent='もじの かたち（かきじゅんは かくにんちゅう）';
+   note.style.cssText='font-size:11px;max-width:115px;color:#8a6a4e';card.append(note);
+  }
+  if((data&&data.url)||(/[ぁ-んァ-ン]/.test(ch))){const link=document.createElement('a');link.href=(data&&data.url)||('https://github.com/KanjiVG/kanjivg/blob/master/kanji/'+ch.codePointAt(0).toString(16).padStart(5,'0')+'.svg');link.target='_blank';link.rel='noopener noreferrer';link.textContent=ch+'の筆順資料 ↗';links.append(link)}
+  root.append(card);
+ });
+ const allVerified=chars.length>0&&verified===chars.length;
+ $('strokeStatus').textContent=allVerified?'✏️ かきじゅんの おてほん':'✏️ かきじゅん（しさく）';
+ $('playStrokes').disabled=!chars.length||chars.some(ch=>!STROKES[ch]?.paths?.length);
+ $('playStrokes').title=allVerified?'筆順アニメーションを再生':'試作の線を順に再生（正しい筆順とは限りません）';
+ $('stopStrokes').disabled=$('playStrokes').disabled;
+ $('strokeCount').textContent=allVerified?'▶ おてほんを みよう':'▶ しさくを みよう';
+}
+// Playback buttons are exclusively managed by animation.js.
+function playAllDraftStrokes(){
+ cancelStrokeTimers();const run=strokeRun;
+ const chars=[...(letters[current]||'あ')];
+ const cells=[...document.querySelectorAll('#practiceCells .practice')];
+ const duration=Number($('strokeSpeed').value)||1000;
+ const count=$('strokeCount');
+ const animations=[];
+ chars.forEach((ch,i)=>{
+  const cell=cells[i];if(!cell)return;
+  const ns='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(ns,'svg');
+  svg.classList.add('animatedStrokeOverlay');
+  svg.setAttribute('viewBox','0 0 130 130');
+  svg.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:8;pointer-events:none;background:#fffdf6;display:block';
+  const data=STROKES[ch];
+  if(data?.paths?.length){
+   const paths=data.paths.map(d=>{const p=document.createElementNS(ns,'path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke','#ed8559');p.setAttribute('stroke-width','7');p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');svg.append(p);return p});
+   cell.append(svg);
+   const lengths=paths.map(p=>{const len=p.getTotalLength();p.style.strokeDasharray=`${len} ${len}`;p.style.strokeDashoffset=String(len);return len});
+   animations.push({type:'paths',paths,lengths,steps:paths.length});
+  }else{
+   const defs=document.createElementNS(ns,'defs');const clip=document.createElementNS(ns,'clipPath');const clipId='reveal-'+run+'-'+i;clip.id=clipId;
+   const rect=document.createElementNS(ns,'rect');rect.setAttribute('x','0');rect.setAttribute('y','0');rect.setAttribute('width','0');rect.setAttribute('height','130');clip.append(rect);defs.append(clip);svg.append(defs);
+   const txt=document.createElementNS(ns,'text');txt.setAttribute('x','65');txt.setAttribute('y','100');txt.setAttribute('text-anchor','middle');txt.setAttribute('font-size','94');txt.setAttribute('font-weight','500');txt.setAttribute('fill','#ed8559');txt.setAttribute('clip-path','url(#'+clipId+')');txt.textContent=ch;svg.append(txt);cell.append(svg);
+   animations.push({type:'glyph',rect,steps:1});
+  }
+ });
+ if(!animations.length){count.textContent='さいせいできません';return}
+ const total=animations.reduce((s,a)=>s+a.steps,0);let start=null;
+ count.textContent='▶ さいせいちゅう 0 / '+total;
+ function frame(now){
+  if(run!==strokeRun)return;
+  if(start===null)start=now;
+  const elapsed=now-start;let offset=0;
+  for(const a of animations){
+   if(a.type==='paths')a.paths.forEach((p,j)=>{const t=Math.max(0,Math.min(1,(elapsed-(offset+j)*duration)/duration));p.style.strokeDashoffset=String(a.lengths[j]*(1-t))});
+   else{const t=Math.max(0,Math.min(1,(elapsed-offset*duration)/duration));a.rect.setAttribute('width',String(130*t))}
+   offset+=a.steps;
+  }
+  count.textContent='▶ '+Math.min(total,Math.floor(elapsed/duration)+1)+' / '+total+'（筆順未検証を含みます）';
+  if(elapsed<total*duration)requestAnimationFrame(frame);
+  else count.textContent='さいせい おわり（しさく・かきじゅん みかくにん）';
+ }
+ requestAnimationFrame(frame);
+};
+function renderCells(){resetUndo();ink=false;cancelStrokeTimers();const c=letters[current]||'あ',root=$('practiceCells');root.innerHTML='';root.classList.toggle('pair',c.length>1);[...c].forEach(ch=>{const cell=document.createElement('div');cell.className='practice'+('ぁぃぅぇぉっゃゅょゎァィゥェォッャュョヮ'.includes(ch)?' smallkana':'');const guide=document.createElement('div');guide.className='guide';guide.textContent=ch;const canvas=document.createElement('canvas');cell.append(guide,canvas);root.append(cell)});updateGuides();renderStrokes();requestAnimationFrame(()=>{[...root.querySelectorAll('.guide')].forEach(g=>{const cell=g.parentElement;let fs=parseFloat(getComputedStyle(g).fontSize);const ctx=document.createElement('canvas').getContext('2d');const family=getComputedStyle(g).fontFamily;while(fs>20){ctx.font=`500 ${fs}px ${family}`;const w=ctx.measureText(g.textContent).width;if(w<=cell.clientWidth*.87 && fs<=cell.clientHeight*.83)break;fs-=3}g.style.fontSize=fs+'px'});canvases=[...root.querySelectorAll('canvas')].map(setupCanvas)});$('pairHelp').textContent=c.length>1?'「'+c+'」は '+[...c].join(' と ')+' を べつべつのマスで れんしゅうしよう！':'マスの なかに かこう！'}
+function setLetter(i){current=i;selector.value=i;completed=0;updateProgress();renderCells();updateHistory()}
+function updateProgress(){$('progress').textContent='★'.repeat(completed)+'☆'.repeat(5-completed)}
+function updateHistory(){const id=script+":"+(letters[current]||"");const n=(state.practice||{})[id]||0;$("history").textContent="これまでの れんしゅう："+n+"かい"}
+groups.onchange=buildLetters;selector.onchange=e=>setLetter(+e.target.value);$('nextLetter').onclick=()=>setLetter((current+1)%letters.length);$('previousLetter').onclick=()=>setLetter((current-1+letters.length)%letters.length);$('clear').onclick=clear;
+document.querySelectorAll('[data-script]').forEach(b=>b.onclick=()=>{script=b.dataset.script;document.querySelectorAll('[data-script]').forEach(x=>x.classList.toggle('selected',x===b));buildGroups()});
+window.addEventListener('resize',()=>{renderCells();ink=false});
+$('mark').onclick=()=>{if(!ink){alert('まずは ゆびで かいてみよう！');return}if(completed<5){completed++;state.practice=state.practice||{};const id=script+":"+(letters[current]||"");state.practice[id]=(state.practice[id]||0)+1;reward();updateProgress();updateHistory();clear();if(completed===5)alert('すごい！ 5かい できたね！ 🎉')}};
+buildGroups();
+let answer=1;function newCount(){answer=1+Math.floor(Math.random()*10);$('apples').textContent='🍎'.repeat(answer);$('countResult').textContent='';let options=new Set([answer]);while(options.size<3)options.add(1+Math.floor(Math.random()*10));$('choices').innerHTML='';[...options].sort((a,b)=>a-b).forEach(n=>{let b=document.createElement('button');b.textContent=n;b.onclick=()=>{if(n===answer){$('countResult').textContent='🎉 せいかい！';if(!$('countResult').dataset.awarded){reward();$('countResult').dataset.awarded='1'}}else $('countResult').textContent='もういちど かぞえよう！'};$('choices').append(b)});$('countResult').dataset.awarded=''}$('nextCount').onclick=newCount;newCount();const colors=['#f5a0a8','#f5b34f','#f5e477','#91ce88','#8dcde9','#aa9cdd','#a57b5a','#ffffff'];let selected=colors[0];colors.forEach(c=>{let b=document.createElement('button');b.className='swatch';b.style.background=c;b.setAttribute('aria-label',c+'をえらぶ');b.onclick=()=>{selected=c;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('selected',x===b))};$('palette').append(b)});$('palette').firstChild.classList.add('selected');document.querySelectorAll('[data-paint]').forEach(x=>x.addEventListener('click',()=>x.setAttribute('fill',selected)));$('resetColor').onclick=()=>document.querySelectorAll('[data-paint]').forEach(x=>x.setAttribute('fill','white'));$('saveColor').onclick=()=>{let svg=document.querySelector('.coloring').cloneNode(true);svg.setAttribute('xmlns','http://www.w3.org/2000/svg');let str=new XMLSerializer().serializeToString(svg),blob=new Blob([str],{type:'image/svg+xml'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='くまのぬりえ.svg';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};$('resetStars').onclick=()=>{if(confirm('ごほうびと れんしゅうきろくを もどしますか？')){state.stars=0;state.practice={};save();updateHistory()}};</script><script>/* Single-target handwriting preview engine. Draft data is explicitly labelled. */
+(()=>{'use strict';
+let generation=0, frame=0;
+function stop(){generation++;if(frame)cancelAnimationFrame(frame);frame=0;document.querySelectorAll('.handwriting-playback').forEach(n=>n.remove());}
+function play(){
+ stop();const run=generation;
+ const selected=document.getElementById('letter');
+ const ch=selected?.selectedOptions?.[0]?.textContent||'';
+ // Multi-character practice groups need a separate per-character playback engine.
+ // Never pretend that a single-character preview covers the whole group.
+ if([...ch].length!==1){const status=document.getElementById('strokeCount');if(status)status.textContent='このグループは1文字ずつ選んで確認してください';return;}
+ const status=document.getElementById('strokeCount');
+ const data=(typeof STROKES!=='undefined'&&STROKES[ch])||null;
+ if(!data||!Array.isArray(data.paths)||!data.paths.length){if(status)status.textContent='この文字の筆順データはまだありません';return;}
+ if(data.verified!==true){if(status)status.textContent='この文字は筆順未検証のため再生できません';return;}
+ const preview=document.getElementById('strokePreview');
+ const target=preview?.querySelector('svg');
+ if(!target){if(status)status.textContent='お手本の表示を確認してください';return;}
+ const ns='http://www.w3.org/2000/svg';
+ const svg=document.createElementNS(ns,'svg');svg.classList.add('handwriting-playback');svg.setAttribute('viewBox',data.viewBox||'0 0 130 130');
+ svg.style.cssText='position:absolute;inset:0;width:100%;height:100%;background:white;pointer-events:none;z-index:5';
+ const parent=target.parentElement;parent.style.position='relative';
+ const paths=data.paths.map(d=>{const el=document.createElementNS(ns,'path');el.setAttribute('d',d);el.setAttribute('fill','none');el.setAttribute('stroke','#e96b41');el.setAttribute('stroke-width','7');el.setAttribute('stroke-linecap','round');el.setAttribute('stroke-linejoin','round');svg.append(el);return el});
+ parent.append(svg);
+ const lengths=paths.map(p=>{let n=1;try{n=Math.max(1,p.getTotalLength())}catch(e){}p.style.strokeDasharray=`${n} ${n}`;p.style.strokeDashoffset=String(n);return n});
+ const duration=Math.max(200,Number(document.getElementById('strokeSpeed')?.value)||1000);
+ let start=null;
+ function tick(now){if(run!==generation)return;if(start===null)start=now;const elapsed=now-start;
+ paths.forEach((p,i)=>{const progress=Math.max(0,Math.min(1,(elapsed-i*duration)/duration));p.style.strokeDashoffset=String(lengths[i]*(1-progress))});
+ const step=Math.min(paths.length,Math.floor(elapsed/duration)+1);
+ if(status)status.textContent=`${step} / ${paths.length} かく ${data.draft?'（筆順未検証）':''}`;
+ if(elapsed<paths.length*duration)frame=requestAnimationFrame(tick);else if(status)status.textContent=`${paths.length} かく おわり ${data.draft?'（筆順未検証）':''}`;
+ }
+ frame=requestAnimationFrame(tick);
+}
+function setup(){const btn=document.getElementById('playStrokes'),stopBtn=document.getElementById('stopStrokes');if(!btn)return;
+ btn.onclick=()=>{stop();playAllDraftStrokes();}; // all characters play; drafts are explicitly marked unverified
+ if(stopBtn){stopBtn.onclick=()=>{stop();cancelStrokeTimers();const s=document.getElementById('strokeCount');if(s)s.textContent='とめました'};/* availability is controlled by renderStrokes */}
+ document.getElementById('letter')?.addEventListener('change',stop);
+ document.getElementById('nextLetter')?.addEventListener('click',stop);
+ document.getElementById('previousLetter')?.addEventListener('click',stop);
+ // Stop the old animation whenever a new preview is rendered (including resize).
+ const preview=document.getElementById('strokePreview');
+ if(preview)new MutationObserver(records=>{if(records.some(r=>[...r.removedNodes].some(n=>n.nodeType===1&&!n.classList?.contains('handwriting-playback'))))stop()}).observe(preview,{childList:true});
+ document.getElementById('group')?.addEventListener('change',stop);
+ document.querySelectorAll('[data-script]').forEach(b=>b.addEventListener('click',stop));
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
+ const label=document.getElementById('strokeStatus');if(label)label.textContent='しさくアニメ（みかくにん）';
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+})();</script>
+<script>/* Development audit: coverage is not the same as verified correctness. */
+window.manabiStrokeAudit=function(){
+ const H='あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
+ const K='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+ const A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+ const rows=[...H,...K,...A].map(ch=>{
+  const item=(typeof STROKES!=='undefined')?STROKES[ch]:null;
+  const paths=Array.isArray(item?.paths)?item.paths:[];
+  const valid=paths.length>0&&paths.every(d=>typeof d==='string'&&/^\s*[Mm]/.test(d));
+  return {char:ch,exists:valid,verified:valid&&item.verified===true,strokes:paths.length};
+ });
+ const report={total:rows.length,withPaths:rows.filter(x=>x.exists).length,verified:rows.filter(x=>x.verified).length,missing:rows.filter(x=>!x.exists).map(x=>x.char),rows};
+ return report;
+};</script></body></html>
